@@ -1,6 +1,8 @@
 # FAIRSalud Documentation
 Official Repo for the Data Curation Tool 2.0 of FAIRSalud project
 
+FAIRSalud Data Curation Tool 2.0 transforms heterogeneous health datasets into semantically enriched, standards-compliant, and FAIR-oriented digital assets. By combining terminology harmonization, visual FHIR mapping, automated validation, metadata enrichment, and FAIR assessment within a privacy-preserving federated architecture, the platform lowers the technical barriers to FAIRification and promotes the creation of interoperable health data that can be more easily discovered, shared, reused, and leveraged for future research and innovation.
+
 ## Observation Resource Transformation Workflow
 This case of use demonstrates how the FAIRSalud platform transforms source data into a FHIR Observation resource through a six-stage workflow covered in five steps:
 -> Upload
@@ -11,7 +13,7 @@ This case of use demonstrates how the FAIRSalud platform transforms source data 
 
 ### 1. Upload
 
-The FAIRSalud Data Curation Tool (DCT 2.0) is an open-source, web-based solution designed for deployment within federated environments. The platform follows an ephemeral data processing approach when handling Electronic Health Records (EHRs), minimizing data persistence and supporting compliance with data sovereignty and privacy requirements.
+The FAIRSalud Data Curation Tool (DCT 2.0) is an open-source, web-based solution designed for deployment within federated environments. The platform follows an ephemeral data processing approach when handling Electronic Health Records (EHRs), minimizing data persistence while supporting compliance with data sovereignty and privacy requirements.
 Access to the platform is restricted to authorized institutions. Users must authenticate using credentials provided by the FAIRSalud technical support team, ensuring secure access to the FAIRification workspace.
 
 ![LoginPage](case_of_use/1.1.login.png)
@@ -19,35 +21,37 @@ Access to the platform is restricted to authorized institutions. Users must auth
 #### FAIRification Workspace
 
 After successful authentication, users are directed to the FAIRification Workspace. The interface is organized around a five-stage workflow that guides the transformation process from source data to FAIR-compliant FHIR resources.
-A navigation panel on the left displays the workflow stages and remains visible throughout the process, allowing users to track their progress. The main panel provides contextual information and guidance for each step.
+A navigation panel on the left displays the workflow stages and remains visible throughout the process, allowing users to track their progress. The main panel provides 
+contextual information and guidance for each step of the FAIRification journey.
 
 ![NewFair](case_of_use/1.2.new_fair.png)
 
 #### Data Upload
 
 The platform supports the ingestion of data from multiple sources, including CSV, XLSX, PostgreSQL databases, and REDCap projects.
-In this example, two files are uploaded:
+In this use case, two files are uploaded:
 - An XLSX dataset containing clinical information to be transformed into a FHIR Observation resource.
-- A CSV file containing ICD-10 codes that will be harmonized with SNOMED CT terminology during the semantic enrichment process.
+- A CSV file containing ICD-10 diagnostic codes that will later be harmonized with SNOMED CT terminology during the semantic enrichment process
 
 ![Upload](case_of_use/1.3.upload.png)
 
-Additional features such as Loading panel in between pages to increase the feeling of dynamic workspace.
-
 #### Workflow Initialization
 
-Once the required files have been provided, the platform processes the uploaded content and prepares the environment for the subsequent FAIRification stages. A loading screen provides feedback on the current operation and ensures a smooth transition between workflow steps.
+Once the required files have been uploaded, the platform processes the input data and prepares the workspace for the subsequent FAIRification stages.
+During this initialization phase, a loading screen provides feedback on the current operation and indicates that the uploaded datasets are being analyzed and prepared for semantic harmonization and mapping activities.
 
 ![Loading](case_of_use/1.4.loading_panel.png)
 
 ### 2. Terminology Service
 
-When the workspace has been initialized and the source data uploaded, the workflow proceeds to the Terminology Service stage. This component supports semantic harmonization by enabling researchers to align local codes and textual values with standardized terminologies.
-To facilitate this process, the platform provides a preview of the uploaded datasets, displaying the first records and the distinct values available for each column. This allows users to inspect the data before performing terminology operations.
-In addition to data exploration, the Terminology Service offers several semantic enrichment capabilities, including:
-- Code-to-code translation between standard terminologies (ICD-10, LOINC, SNOMED CT, and ATC).
-- Text-to-code matching, enabling free-text values to be associated with standardized concepts.
-- Terminology lookup and concept exploration to support informed decision-making during the FAIRification process.
+When the workspace has been initialized and the source data uploaded, the workflow proceeds to the Terminology Service stage. This component supports semantic harmonization by enabling researchers to align local codes and textual values with standardized healthcare terminologies.
+To facilitate this process, the platform provides a preview of the uploaded datasets, displaying sample records together with the distinct values detected for each column. This allows users to inspect the source data and identify fields that may benefit from terminology standardization.
+In addition to data exploration, the Terminology Service provides several semantic enrichment capabilities, including:
+- **Code-to-code translation** between standard terminologies such as ICD-10, LOINC, SNOMED CT, and ATC.
+- **Text-to-code matching** enables free-text values to be associated with standardized concepts.
+- **Terminology lookup and concept exploration** that supports**** informed decision-making during the FAIRification process.
+
+These functionalities help improve semantic interoperability and ensure that the transformed data can be consistently interpreted across systems and institutions.
 
 ![Terminology](case_of_use/2.1.terminology_service.png)
 
@@ -191,3 +195,38 @@ At this point, the transformed data conforms to the expected FHIR structure and 
 ![Complete](case_of_use/4.2.validation_complete.png)
 
 ### FAIRness Assessment
+
+The FAIRness Assessment stage represents the final step of the FAIRification workflow. At this point, the generated FHIR resources are technically valid and interoperable. The objective of this stage is to further enhance their discoverability, accessibility, interoperability, and reusability by enriching the generated assets with machine-readable metadata and evaluating them against FAIR assessment criteria.
+DCT 2.0 combines metadata enrichment capabilities with a dynamic FAIR scoring system that continuously reflects the FAIR maturity of the generated assets as additional information is provided.
+The FAIR score is computed using indicators derived from the Research Data Alliance (RDA) FAIR Data Maturity Model. While a significant portion of these indicators are inherently satisfied through the architecture and workflow of DCT 2.0, further improvements can be achieved through metadata enrichment and FAIR-oriented curation practices.
+To support this process, the platform adopts the HealthDCAT-AP metadata profile, enabling the generation of standardized metadata descriptions aligned with the FAIR principles and suitable for publication within health data ecosystems.
+
+![FAIRness](case_of_use/5.1.fairness_main.png)
+
+#### Metadata Enrichment
+
+The FAIRification process continues with the completion of descriptive metadata associated with the generated resources. This information provides contextual details regarding the dataset, its provenance, ownership, licensing conditions, and intended use.
+As metadata fields are completed and validated, the FAIR assessment is automatically updated, providing immediate feedback on the FAIR maturity of the resulting assets.
+
+![Score](case_of_use/5.2.fair_score.png)
+
+#### FAIR Indicators
+
+One of the distinguishing features of DCT 2.0 is its ability to provide transparency regarding the FAIR assessment process.
+The platform presents the individual RDA indicators together with their evaluation status, allowing researchers to understand which FAIR principles have already been satisfied and which aspects may still require attention.
+Due to the privacy-preserving and ephemeral data processing architecture adopted by DCT 2.0, certain indicators cannot be fully satisfied within the scope of the platform itself. As a result, a FAIR score below 100% does not necessarily indicate a limitation of the generated assets, but rather reflects organizational, infrastructural, or governance aspects that must be addressed outside the FAIRification workflow.
+To support users in achieving higher FAIR maturity, the platform provides actionable recommendations describing the additional measures required to satisfy the remaining indicators.
+
+![RDA](case_of_use/5.3.rda_indicators.png)
+
+Upon completion of the FAIRness Assessment, DCT 2.0 generates a FAIR Bundle containing all artifacts produced during the FAIRification process.
+The bundle includes:
+- FHIR resources exported in NDJSON format.
+- HealthDCAT-AP metadata represented as JSON-LD.
+- A FAIR assessment report in HTML format.
+- Guidance and recommendations for improving FAIR compliance.
+This package provides researchers with a portable and reusable FAIR asset that can be shared, archived, published, or integrated into downstream research infrastructures.
+
+![Bundle](case_of_use/5.4.final_bundle.png)
+
+

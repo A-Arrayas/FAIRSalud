@@ -161,4 +161,33 @@ At the end of this stage, the transformation logic required to generate a FHIR O
 
 ### Validation
 
+Once the mapping configuration has been completed, the generated resources undergo a validation process to ensure both structural correctness and compliance with FHIR standards. DCT 2.0 implements a two-layer validation strategy:
+
+- Internal Validation: verifies the consistency of the mapping configuration, transformation rules, and generated resources.
+- HAPI FHIR Validation: wevaluates the generated resources against the FHIR specification and applicable conformance rules.
+
+This combined approach helps identify potential issues before the resources are used in downstream systems or research workflows.
+
+#### Validation Progress
+
+During execution, the platform provides real-time feedback through a progress indicator, allowing users to monitor the validation process.
+In addition to tracking progress, the validation interface presents a dynamic report containing detailed information about the generated resources, including:
+
+Validation errors that must be resolved.
+Warnings that may require further review.
+Records that have been skipped during the transformation process.
+Summary statistics regarding the validation outcome.
+
+This information enables researchers to quickly identify and address potential quality issues before proceeding to the final FAIRification stage.
+
+![Validation](case_of_use/4.1.validation_progress.png)
+
+#### Validation Results
+
+After all generated resources have been successfully evaluated, the platform displays a completion message summarizing the outcome of the validation process.
+
+At this point, the transformed data conforms to the expected FHIR structure and is ready for FAIRness assessment. While validation ensures technical interoperability and standards compliance, the final stage focuses on evaluating the resulting assets against the FAIR principles, providing insight into their readiness for data sharing, reuse, and secondary research applications.
+
+![Complete](case_of_use/4.2.validation_complete.png)
+
 ### FAIRness Assessment

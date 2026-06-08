@@ -53,7 +53,7 @@ In addition to data exploration, the Terminology Service offers several semantic
 
 #### Terminology Translation
 
-In this use case, the CSV file containing diagnostic codes is selected and the `icd10-diagnosis` column is chosen as the source field. The **Code Translation** operation is then configured to translate ICD-10 concepts into SNOMED CT concepts.
+In this use case, the CSV file containing diagnostic codes is selected and the `icd10_diagnosis` column is chosen as the source field. The **Code Translation** operation is then configured to translate ICD-10 concepts into SNOMED CT concepts.
 
 ![CodeTranslation](case_of_use/2.2.code_translation.png)
 
@@ -72,7 +72,92 @@ Once the terminology mappings have been reviewed and accepted, the translated co
 
 ![Stored](case_of_use/2.5.suggestions_stored.png)
 
-### Visual Mapping
+### 3. Visual Mapping
+
+The Visual Mapping stage constitutes the core of the FAIRSalud Data Curation Tool (DCT 2.0). At this stage, the Extract-Transform-Load (ETL) configuration is defined, establishing how source data elements will be transformed into a standards-compliant FHIR resource.
+The workspace presents the uploaded datasets alongside a visual mapping environment where users can select the target FHIR resource and define the relationships between source data attributes and FHIR elements.
+This is the most important phase given that here is where the Data Curation Tool 2.0 heart lives and the ETL is configured. First thing the researcher sees is the workspace files working with that can be changed anytime and a Visual resource mapper that lets select the FHIR Resource type and shows the source file with its detected columns.
+
+![VisualMapping](case_of_use/3.1.visual_mapping.png)
+
+#### Resource Selection
+
+For this use case, the FHIR Observation resource is selected as the target model. The mapping interface is divided into two primary panels:
+- The FHIR Resource Tree, displaying the hierarchical structure of the selected FHIR resource.
+- The Source Data Panel, displaying the columns detected in the uploaded dataset.
+This side-by-side representation allows users to visually associate source attributes with their corresponding FHIR elements.
+
+![Observation](case_of_use/3.2.observation_mapping.png)
+
+#### Create Mappings
+
+To create a mapping, users select a source column and a target FHIR element. The selected pair is displayed in the mapping panel, where the relationship can be confirmed and stored.
+This visual approach simplifies the transformation process while providing immediate feedback regarding the mapping configuration.
+
+![MatchPair](case_of_use/3.3.match_paired.png)
+
+#### Identifying Mandatory Elements
+
+The platform assists users by highlighting mandatory FHIR elements required for resource validity.
+For the Observation resource, fields such as `status` and `code` are mandatory and must be mapped before the transformation can be completed successfully.
+
+![Required](case_of_use/3.4.required_fields.png)
+
+#### Mapping Resource Attributes
+
+As mappings are created, selected source columns and FHIR elements are highlighted within the interface, providing visual guidance throughout the configuration process.
+In this example, the source column corresponding to the observation status is associated with the `Observation.status` element.
+
+![Status](case_of_use/3.5.status_match.png)
+
+#### Transformation Rules
+
+Not all mappings involve direct value transfers. To support a wide range of transformation scenarios, DCT 2.0 provides an Advanced Rule Editor that allows users to define transformation logic when source and target representations differ.
+The platform currently supports nine transformation types:
+
+- Direct Copy – Transfers values without modification.
+- Numeric – Handles decimal and numerical conversions.
+- Date Format – Supports date normalization and formatting.
+- FHIR Reference – Creates references to external FHIR resources.
+- Code Map – Maps source values to controlled vocabularies or predefined code sets.
+- Boolean Map – Converts source values into boolean representations.
+- Concat Fields – Combines multiple source fields into a single target value.
+- Split Fields – Divides a source value into multiple target elements.
+- Terminology Translation – Integrates terminology harmonization services into the mapping process.
+
+For the Observation resource, the status element requires values conforming to the codes defined by the FHIR specification. Therefore, the Code Map transformer is used to translate source values into the accepted Observation status codes.
+The platform continuously informs users about any mandatory elements that remain unmapped, helping ensure the creation of a valid FHIR resource.
+
+![Active](case_of_use/3.6.active_mappings.png)
+
+#### Navigation and Search
+
+To facilitate mapping of large and complex resources, the FHIR Resource Tree includes a search capability that allows users to quickly locate specific elements.
+This feature significantly accelerates the mapping process when working with resources containing numerous attributes.
+
+![Category](case_of_use/3.7.category_search.png)
+
+#### Terminology Transformations
+
+The Terminology Translation transformer enables semantic enrichment directly within the mapping workflow and supports three different scenarios:
+- Code translation between standard terminologies.
+- Semantic matching of textual values to concepts.
+- Reuse of terminology suggestions generated during the Terminology Service stage.
+
+![TermTransform](case_of_use/3.8.terminology_transformer.png)
+
+In this use case, the source column containing clinical descriptions is mapped to Observation.note[0].text. The terminology mappings generated during the previous stage are reused to associate these textual descriptions with their corresponding SNOMED CT concepts, ensuring semantic interoperability.
+
+![TermImport](case_of_use/3.9.terminology_transformer_import.png)
+
+#### Reviewing Mapping Configuration
+
+Before proceeding to validation, users can review all configured mappings through the Active Mappings panel.
+This view provides a consolidated overview of source-target relationships, applied transformation rules, and mapping status. Existing mappings can be modified or removed if adjustments are required.
+
+![AllMappings](case_of_use/3.10.all_mappings.png)
+
+At the end of this stage, the transformation logic required to generate a FHIR Observation resource has been fully defined and is ready for validation.
 
 ### Validation
 

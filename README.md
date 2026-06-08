@@ -1,7 +1,7 @@
 # FAIRSalud Documentation
 Official Repo for the Data Curation Tool 2.0 of FAIRSalud project
 
-FAIRSalud Data Curation Tool 2.0 transforms heterogeneous health datasets into semantically enriched, standards-compliant, and FAIR-oriented digital assets. By combining terminology harmonization, visual FHIR mapping, automated validation, metadata enrichment, and FAIR assessment within a privacy-preserving federated architecture, the platform lowers the technical barriers to FAIRification and promotes the creation of interoperable health data that can be more easily discovered, shared, reused, and leveraged for future research and innovation.
+FAIRSalud Data Curation Tool 2.0 transforms heterogeneous health datasets into semantically enriched, standards-compliant, and FAIR digital assets. By combining terminology harmonization, visual FHIR mapping, automated validation, metadata enrichment, and FAIR assessment within a privacy-preserving federated architecture, the platform lowers the technical barriers to FAIRification and promotes the creation of interoperable health data that can be more easily discovered, shared, reused, and leveraged for future research and innovation.
 
 ## Observation Resource Transformation Workflow
 This case of use demonstrates how the FAIRSalud platform transforms source data into a FHIR Observation resource through a six-stage workflow covered in five steps:
